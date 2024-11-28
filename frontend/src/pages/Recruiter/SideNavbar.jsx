@@ -12,9 +12,9 @@ const SideNavbar = () => {
   return (
     <div className="side-navbar">
       <ul className="menu-list">
-        <li className="menu-item">
+        {/* <li className="menu-item">
           <HomeIcon className="menu-icon" /> Get Started
-        </li>
+        </li> */}
         <li className="menu-item">
           <PersonIcon className="menu-icon" />Profile 
         </li>
@@ -35,7 +35,7 @@ const SideNavbar = () => {
         <a href="#help">
           <HelpIcon className="menu-icon" /> Help
         </a>
-        <a href="#logout">
+        <a href="/login">
           <LogoutIcon className="menu-icon" /> Log Out
         </a>
       </div>

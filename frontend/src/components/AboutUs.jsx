@@ -14,7 +14,7 @@ const About = () => {
           </div>
           <nav className="nav-links">
 
-            <Link to={'/'}><a href="#home">Home</a></Link>
+            <Link to={'/home'}><a href="#home">Home</a></Link>
 
 
             <Link to={'/aboutus'}><a href="#price-sheet">About us</a></Link>

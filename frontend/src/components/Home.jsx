@@ -82,8 +82,8 @@ const Home = () => {
           <span style={{ fontWeight: 600, fontSize: 25 }}>JobSphere</span>
         </div>
         <nav className="nav-links">
-          <Link to={"/"}>Home</Link>
-          <Link to={"/"}>About us</Link>
+          <Link to={"/home"}>Home</Link>
+          <Link to={"/aboutus"}>About us</Link>
           <Link to={"/login"}>Join</Link>
         </nav>
       </header>

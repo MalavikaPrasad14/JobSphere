@@ -113,7 +113,7 @@ function CompanyReg() {
                     <input type="password" placeholder="Password" name="password" value={registerData.password} onChange={handleChange} />
                     <input type="password" placeholder=" Confirm Password" name="password" value={registerData.password} onChange={handleChange} />
                    
-            <Link to={'/recruiter'}> <button type="submit">Sign In</button></Link>
+            <Link to={'/recruiter'}> <button type="submit">Sign Up</button></Link>
                    
                     {error && <p className="error-message">{error}</p>}
                 </form>

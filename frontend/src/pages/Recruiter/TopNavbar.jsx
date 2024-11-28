@@ -13,8 +13,8 @@ const TopNavbar = () => {
                 <span style={{ fontWeight: 600, fontSize: 25, color: "white" }}>JobSphere</span>
             </div>
             <div className="nav-links">
-                <a href="#find-jobs">Find Jobs</a>
-                <a href="#company">Company</a>
+                <a href="/home">Find Jobs</a>
+                <a href="/aboutus">About Us</a>
                 <a href="#contact">Contact</a>
                 <div className="nav-icons">
                     <NotificationsIcon className="icon" />
