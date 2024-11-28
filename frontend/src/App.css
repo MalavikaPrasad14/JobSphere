@@ -1,0 +1,35 @@
+app.css                                                                                                                                                                                .app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.main-layout {
+  display: flex;
+  margin-top: 70px; /* Adjust based on the height of the Top Navbar */
+  height: calc(100vh - 70px); /* Full height minus the Top Navbar */
+}
+
+aside {
+  width: 250px; /* Adjust as per the Side Navbar width */
+  height: 100%;
+  background-color: #f4f4f4; /* Optional background for Side Navbar */
+}
+
+main {
+  flex: 1;
+  padding: 0px; /* Optional padding for the main content */
+  overflow-y: auto; /* Scroll if content exceeds viewport height */
+  background-color: #2423233c; /* Optional background for Main Content */
+  display: flex;
+  justify-content: center; /* Centers the form horizontally */
+  align-items: center; /* Centers the form vertically */
+}

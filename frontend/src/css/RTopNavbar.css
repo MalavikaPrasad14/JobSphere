@@ -1,0 +1,96 @@
+Top Navbar css
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 220vh;
+    padding: 0%;
+  }
+  
+  .content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding: 20px 1px 10px 0px;
+  }
+  
+  .profile-form {
+    max-width: 800px;
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-heading {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 0.875em;
+    margin-left: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .form-row > .MuiTextField-root {
+    flex: 1;
+  }
+
+  /* .button{
+    display: flex;
+    justify-content: center;
+    position: relative;
+  } */
+  app.css                                                                                                                                                                                .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .main-layout {
+    display: flex;
+    margin-top: 70px; /* Adjust based on the height of the Top Navbar */
+    height: calc(100vh - 70px); /* Full height minus the Top Navbar */
+  }
+  
+  aside {
+    width: 250px; /* Adjust as per the Side Navbar width */
+    height: 100%;
+    background-color: #f4f4f4; /* Optional background for Side Navbar */
+  }
+  
+  main {
+    flex: 1;
+    padding: 0px; /* Optional padding for the main content */
+    overflow-y: auto; /* Scroll if content exceeds viewport height */
+    background-color: #2423233c; /* Optional background for Main Content */
+    display: flex;
+    justify-content: center; /* Centers the form horizontally */
+    align-items: center; /* Centers the form vertically */
+  }
