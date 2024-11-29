@@ -82,7 +82,8 @@ function LoginSignup() {
                         <input type="text" placeholder="Phone" name="phone" value={registerData.phone} onChange={handleChange} />
                         <input type="password" placeholder="Password" name="password" value={registerData.password} onChange={handleChange} />
                         <input type="password" placeholder=" Confirm Password" name="password" value={registerData.password} onChange={handleChange} />
-                        <button type="submit">Sign Up</button>
+                    
+                        <Link to={'/user'}><button type="submit">Sign Up</button></Link>
                         {error && <p className="error-message">{error}</p>}
                     </form>
                 </div>

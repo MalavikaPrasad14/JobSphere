@@ -7,6 +7,7 @@ import LoginSignup from './components/Login'
 import CompanyReg from './components/CompanyReg'
 import Home from './components/Home'
 import RecruiterProfile from './pages/Recruiter/RecruiterProfile'
+import UserProfile from './pages/Job Seeker/UserProfile'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/home" element={<Home />} />
         <Route path="/recruiter" element={<RecruiterProfile />} />
+        <Route path="/user" element={<UserProfile />} />
       </Routes>
     </>
   )
