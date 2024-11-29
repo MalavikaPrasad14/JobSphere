@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import log from "../assets/orangelogo.png";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +10,8 @@ import Footer from "../components/Footer";
 import { Grid, TextField } from "@mui/material";
 import axios from "axios";
 
-const Home = () => {
+
+const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -50,30 +51,39 @@ const Home = () => {
     });
     setFilteredJobs(results);
   };
+  
+    const navigate = useNavigate();
+  
+    const handleUpdate = (job) => {
+      navigate("/home/single", { state: { job } }); // Pass job details to Single.jsx
+    };
 
   // Styles
   const styles = {
     heroSection: {
       marginTop: "0px",
       height: "500px",
-      backgroundImage: "url(/Images/home.jpg)",
+      backgroundImage: "url(Images/home.jpg)",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
+      padding:"10px"
     },
     searchBar: {
       display: "flex",
       justifyContent: "center",
       gap: "10px",
-      marginTop: "200px",
-    },
-    inputSelect: {
-      padding: "10px",
-      width: "200px",
-      borderRadius: "5px",
-    },
-  };
+      marginLeft: "550px",
 
+      marginTop: "150px",
+      backgroundColor: "rgba(255, 255, 255, 0.6)", // Visible background
+      padding: "10px", // Inner spacing
+      borderRadius: "10px", // Rounded corners
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Depth effect
+      width: "fit-content", // Automatically fits content
+      maxWidth: "90%", // Prevents it from stretching too far
+    },
+  }
   return (
     <div className="home-container">
       <header className="navbar">
@@ -82,12 +92,13 @@ const Home = () => {
           <span style={{ fontWeight: 600, fontSize: 25 }}>JobSphere</span>
         </div>
         <nav className="nav-links">
-          <Link to={"/home"}>Home</Link>
-          <Link to={"/aboutus"}>About us</Link>
+          <Link to={"/"}>Home</Link>
+          <Link to={"/"}>About us</Link>
           <Link to={"/login"}>Join</Link>
         </nav>
       </header>
       <main style={styles.heroSection}>
+        
         <div style={styles.searchBar}>
           <form
             onSubmit={handleSearch}
@@ -100,30 +111,7 @@ const Home = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            {/* <select
-              style={styles.inputSelect}
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-            > */}
-              {/* <option value="">Select Location</option>
-              {locations.map((location, index) => (
-                <option key={index} value={location}>
-                  {location}
-                </option>
-              ))} */}
-            {/* </select> */}
-            {/* <select
-              style={styles.inputSelect}
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            > */}
-              {/* <option value="">Select Category</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
-              ))} */}
-            {/* </select> */}
+           
             <Button type="submit" variant="contained" color="primary">
               Search
             </Button>
@@ -150,8 +138,8 @@ const Home = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
+               
+                            <Button onClick={() => handleUpdate(job)}>more</Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -163,4 +151,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Search;

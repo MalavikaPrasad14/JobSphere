@@ -8,6 +8,8 @@ import CompanyReg from './components/CompanyReg'
 import Home from './components/Home'
 import RecruiterProfile from './pages/Recruiter/RecruiterProfile'
 import UserProfile from './pages/Job Seeker/UserProfile'
+import Single from './components/Single'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +24,8 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/recruiter" element={<RecruiterProfile />} />
         <Route path="/user" element={<UserProfile />} />
+        <Route path="/home/single" element={<Single />} />
+
       </Routes>
     </>
   )
