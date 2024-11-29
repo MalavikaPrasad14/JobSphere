@@ -119,10 +119,24 @@
 
 // export default Single;
 
-
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CardContent, Typography, Button, Modal, Box } from "@mui/material";
+import {
+  CardContent,
+  Typography,
+  Button,
+  Modal,
+  Box,
+  Stack,
+  Divider,
+} from "@mui/material";
+import WorkIcon from "@mui/icons-material/Work";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CategoryIcon from "@mui/icons-material/Category";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import SkillIcon from "@mui/icons-material/BuildCircle";
+import DeadlineIcon from "@mui/icons-material/EventAvailable";
 
 const Single = () => {
   const location = useLocation();
@@ -134,50 +148,48 @@ const Single = () => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      padding: "20px",
     },
     card: {
-      background: "#ffffff",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      borderRadius: "8px",
+      background: "#f9f9f9",
+      boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
+      borderRadius: "16px",
       maxWidth: "700px",
-      width: "90%",
-      padding: "20px",
-      fontFamily: "Arial, sans-serif",
+      width: "100%",
+      padding: "24px",
+      fontFamily: "Verdana, sans-serif",
     },
     header: {
-      color: "orange",
+      color: "#E07B39",
       fontWeight: "bold",
-      marginBottom: "16px",
-    },
-    subtitle: {
-      color: "#666666",
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
       marginBottom: "16px",
     },
     details: {
-      lineHeight: "1.6",
-      marginBottom: "20px",
+      lineHeight: "1.8",
       fontSize: "16px",
-      color: "#333333",
+      color: "#444",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      marginBottom: "12px",
     },
     backButton: {
-      backgroundColor: "#EB5B00",
-      color: "white",
+      backgroundColor: "#3f51b5",
+      color: "#fff",
       padding: "10px 20px",
-      border: "none",
-      borderRadius: "5px",
+      borderRadius: "8px",
       textTransform: "uppercase",
       fontWeight: "bold",
       cursor: "pointer",
-      textDecoration: "none",
-      display: "inline-block",
-      textAlign: "center",
       marginTop: "20px",
-      marginLeft: "286px",
-
+      textAlign: "center",
     },
     noJobMessage: {
       textAlign: "center",
-      color: "#ff0000",
+      color: "#d32f2f",
       fontWeight: "bold",
       margin: "20px",
     },
@@ -196,7 +208,7 @@ const Single = () => {
           <Typography id="no-job-modal" variant="h6" sx={styles.noJobMessage}>
             No job details found!
           </Typography>
-          <Button onClick={() => navigate("/search")} sx={styles.backButton}>
+          <Button onClick={() => navigate("/home")} sx={styles.backButton}>
             Go Back
           </Button>
         </Box>
@@ -215,39 +227,42 @@ const Single = () => {
       <Box sx={styles.card}>
         <CardContent>
           <Typography id="job-details-modal" variant="h4" sx={styles.header}>
-            {job.jobTitle}
+            <WorkIcon /> {job.jobTitle}
           </Typography>
-          <Typography variant="h6" sx={styles.subtitle}>
-            Company: {job.companyName}
+          <Divider sx={{ marginBottom: "16px" }} />
+          <Typography variant="body1" sx={styles.details}>
+            <WorkIcon /> Company: {job.companyName}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Location: {job.location || "Not specified"}
+            <LocationOnIcon /> Location: {job.location || "Not specified"}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Category: {job.category || "Not specified"}
+            <CategoryIcon /> Category: {job.category || "Not specified"}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Job Description: {job.description || "No description available"}
+            <DescriptionIcon /> Job Description: {job.description || "No description available"}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Salary Range:{" "}
-            {job.salaryRange
-              ? `Min: $${job.salaryRange.min} - Max: $${job.salaryRange.max}`
-              : "Not specified"}
+            <AttachMoneyIcon /> Salary Range: {job.salaryRange ? `Min: $${job.salaryRange.min} - Max: $${job.salaryRange.max}` : "Not specified"}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Skills Required: {job.skillsRequired || "Not specified"}
+            <SkillIcon /> Skills Required: {job.skillsRequired || "Not specified"}
           </Typography>
           <Typography variant="body1" sx={styles.details}>
-            Requirements: {job.requirements || "Not specified"}
-          </Typography>
-          <Typography variant="body1" sx={styles.details}>
-            Application Deadline: {job.applicationDeadline || "Not specified"}
+            <DeadlineIcon /> Application Deadline: {job.applicationDeadline || "Not specified"}
           </Typography>
         </CardContent>
-        <Button onClick={() => navigate("/home")} sx={styles.backButton}>
-          Apply
-        </Button>
+        <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <Button onClick={() => navigate("/home")} sx={styles.backButton}>
+            Back
+          </Button>
+          <Button
+            onClick={() => navigate("/home", { state: { job } })}
+            sx={{ ...styles.backButton, backgroundColor: "#4caf50" }}
+          >
+            Apply
+          </Button>
+        </Stack>
       </Box>
     </Modal>
   );
