@@ -215,75 +215,124 @@ const Home = () => {
     backgroundColor: "#f9f9f9", // Light background color
   }}
 >
-<CardContent>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 1 }}>
-          <Typography
-            gutterBottom
-            variant="h6" // Smaller heading font size
-            component="div"
-            sx={{
-              fontWeight: "bold",
-              color: "#000000", // Black color for job title
-              textAlign: "left",
-            }}
-          >
-            {job.jobTitle}
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 0.5 }}>
-          <Typography
-            variant="body2" // Smaller font size for company name
-            color="#E07B39"
-            sx={{
-              fontWeight: "bold",
-              fontFamily: "'Roboto', sans-serif", // Custom font family (can be replaced)
-            }}
-          >
-            {job.companyName}
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2, marginBottom: 2 }}>
-          <Typography variant="body2" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <LocationOnIcon sx={{ color: "#808080" }} /> {job.location || "Not specified"}
-          </Typography>
-          {/* <Typography variant="body2" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <PaidIcon sx={{ color: "#808080" }} /> {job.salaryRange || "Not specified"}
-          </Typography> */}
-          <Typography variant="body2" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <WorkIcon sx={{ color: "#808080" }} /> {job.experienceRequired || "Not specified"}
-          </Typography>
-        </Box>
-        <Typography
-          variant="body2" // Smaller font size for skills
-          color="text.secondary"
-          sx={{
-            textAlign: "left",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <CodeIcon sx={{ color: "#808080" }} /> {job.skillsRequired?.join(", ") || "Skills not specified"}
-        </Typography>
-      </CardContent>
-      <CardActions sx={{ justifyContent: "center" }}>
-        <Button
-          onClick={() => handleUpdate(job)}
-          sx={{
-            backgroundColor: "#003399", // Button color
-            color: "#ffffff",
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            padding: "8px 16px",
-            borderRadius: "20px",
-            "&:hover": {
-              backgroundColor: "#002366", // Darker shade on hover
-            },
-          }}
-        >
-          Learn More
-        </Button>
-      </CardActions>
+<Card
+  sx={{
+    width: 300, // Fixed width
+    height: 350, // Fixed height
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    boxShadow: 3, // Shadow for aesthetic
+    borderRadius: "16px", // Rounded corners
+    overflow: "hidden", // Prevent content overflow
+    padding: 2, // Padding inside the card
+  }}
+>
+  <CardContent
+    sx={{
+      flexGrow: 1, // Ensure content takes available space
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+    }}
+  >
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 1,
+      }}
+    >
+      <Typography
+        gutterBottom
+        variant="h6"
+        component="div"
+        sx={{
+          fontWeight: "bold",
+          color: "#000000",
+          textAlign: "left",
+        }}
+      >
+        {job.jobTitle}
+      </Typography>
+    </Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 0.5,
+      }}
+    >
+      <Typography
+        variant="body2"
+        color="#E07B39"
+        sx={{
+          fontWeight: "bold",
+          fontFamily: "'Roboto', sans-serif",
+        }}
+      >
+        {job.companyName}
+      </Typography>
+    </Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-start",
+        gap: 2,
+        marginBottom: 2,
+      }}
+    >
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+      >
+        <LocationOnIcon sx={{ color: "#808080" }} /> {job.location || "Not specified"}
+      </Typography>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+      >
+        <WorkIcon sx={{ color: "#808080" }} /> {job.experienceRequired || "Not specified"}
+      </Typography>
+    </Box>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      sx={{
+        textAlign: "left",
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+      }}
+    >
+      <CodeIcon sx={{ color: "#808080" }} /> {job.skillsRequired?.join(", ") || "Skills not specified"}
+    </Typography>
+  </CardContent>
+  <CardActions sx={{ justifyContent: "center" }}>
+    <Button
+      onClick={() => handleUpdate(job)}
+      sx={{
+        backgroundColor: "#003399",
+        color: "#ffffff",
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        padding: "8px 16px",
+        borderRadius: "20px",
+        "&:hover": {
+          backgroundColor: "#002366",
+        },
+      }}
+    >
+      Learn More
+    </Button>
+  </CardActions>
+</Card>
+
 </Card>
 
             </Grid>
