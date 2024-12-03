@@ -29,14 +29,8 @@ const jobPostSchema = new mongoose.Schema({
     required: true,
   },
   salaryRange: {
-    min: {
-      type: Number, 
-      required: true,
-    },
-    max: {
-      type: Number, 
-      required: true,
-    },
+    type: String, 
+    required: true,
   },
   skillsRequired: {
     type: [String], 

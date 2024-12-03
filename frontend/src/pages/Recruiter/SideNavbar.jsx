@@ -7,6 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Link } from "react-router-dom";
 
 const SideNavbar = () => {
   return (
@@ -15,18 +16,26 @@ const SideNavbar = () => {
         {/* <li className="menu-item">
           <HomeIcon className="menu-icon" /> Get Started
         </li> */}
-        <li className="menu-item">
-          <PersonIcon className="menu-icon" />Profile 
-        </li>
-        <li className="menu-item">
-          <WorkIcon className="menu-icon" /> Posted Jobs
-        </li>
-        <li className="menu-item">
-          <MailIcon className="menu-icon" /> Applications
-        </li>
-        <li className="menu-item">
-          <StarIcon className="menu-icon" /> Shortlists
-        </li>
+        <Link to="#" className="line">
+          <li className="menu-item">
+            <PersonIcon className="menu-icon" />Profile
+          </li>
+        </Link>
+        <Link to="/newjob" className="line">
+          <li className="menu-item">
+            <WorkIcon className="menu-icon" />Posted Jobs
+          </li>
+        </Link>
+        <Link to="#" className="line">
+          <li className="menu-item">
+            <MailIcon className="menu-icon" /> Applications
+          </li>
+        </Link>
+        <Link to="#" className="line">
+          <li className="menu-item">
+            <StarIcon className="menu-icon" /> Shortlists
+          </li>
+        </Link>
       </ul>
       <div className="bottom-links">
         <a href="#settings">

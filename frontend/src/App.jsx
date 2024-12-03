@@ -9,6 +9,7 @@ import Home from './components/Home'
 import RecruiterProfile from './pages/Recruiter/RecruiterProfile'
 import UserProfile from './pages/Job Seeker/UserProfile'
 import Single from './components/Single'
+import JobPostForm from './pages/Recruiter/JobPostForm'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/recruiter" element={<RecruiterProfile />} />
         <Route path="/user" element={<UserProfile />} />
         <Route path="/home/single" element={<Single />} />
+        <Route path="/newjob" element={<JobPostForm />} />
 
       </Routes>
     </>
