@@ -10,6 +10,8 @@ import RecruiterProfile from './pages/Recruiter/RecruiterProfile'
 import UserProfile from './pages/Job Seeker/UserProfile'
 import Single from './components/Single'
 import JobPostForm from './pages/Recruiter/JobPostForm'
+import JobApplicationsTable from './pages/Recruiter/Application'
+import Shortlisted from './pages/Recruiter/Shortlisted'
 
 
 function App() {
@@ -27,7 +29,8 @@ function App() {
         <Route path="/user" element={<UserProfile />} />
         <Route path="/home/single" element={<Single />} />
         <Route path="/newjob" element={<JobPostForm />} />
-
+        <Route path="/recuiter/application" element={<JobApplicationsTable />} />
+        <Route path="/recuiter/shortlisted" element={<Shortlisted/>} />
       </Routes>
     </>
   )

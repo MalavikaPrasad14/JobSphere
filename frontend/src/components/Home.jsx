@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Footer from "../components/Footer";
-import { Box, Grid, TextField } from "@mui/material";
+import { Box, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PaidIcon from '@mui/icons-material/Paid';
 import WorkIcon from '@mui/icons-material/Work';
@@ -18,7 +18,7 @@ import Carousel from "react-material-ui-carousel"
 import carouselImage from "../assets/image3.jpg"
 import carouselImages from "../assets/image4.jpg"
 import carouselImage1 from "../assets/image5.jpg"
-
+import SearchIcon from "@mui/icons-material/Search";
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [jobs, setJobs] = useState([]);
@@ -99,20 +99,7 @@ const Home = () => {
       backgroundRepeat: "no-repeat",
       padding:"10px"
     },
-    // searchBar: {
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   gap: "10px",
-    //   marginLeft: "550px",
-
-    //   marginTop: "150px",
-    //   backgroundColor: "rgba(255, 255, 255, 0.6)", // Visible background
-    //   padding: "10px", // Inner spacing
-    //   borderRadius: "10px", // Rounded corners
-    //   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Depth effect
-    //   width: "fit-content", // Automatically fits content
-    //   maxWidth: "90%", // Prevents it from stretching too far
-    // },
+    
   }
   return (
     <div className="home-container">
@@ -173,10 +160,7 @@ const Home = () => {
           transform: "translate(-50%, -50%)", // Center horizontally and vertically
           display: "flex",
           gap: "10px",
-          background: "rgba(255, 255, 255, 0.8)", // Light background for readability
-          padding: "10px 20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow for a neat look
+          
         }}
       >
         <TextField
@@ -185,10 +169,21 @@ const Home = () => {
           variant="outlined"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{"& .MuiOutlinedInput-root": {
+            borderRadius: "50px",
+            backgroundColor: "#f9f9f9",
+          },}}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton type="submit" sx={{backgroundColor:"orange",color: "white",borderRadius: "40px",padding: "5px",minWidth: "30px"}}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         />
-        <Button type="submit" variant="contained" sx={{backgroundColor:"orange"}}>
-          Job Here
-        </Button>
+        
       </form>
     </div>
   ))}

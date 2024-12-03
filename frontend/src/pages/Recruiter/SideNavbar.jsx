@@ -26,12 +26,12 @@ const SideNavbar = () => {
             <WorkIcon className="menu-icon" />Posted Jobs
           </li>
         </Link>
-        <Link to="#" className="line">
+        <Link to="/recuiter/application" className="line">
           <li className="menu-item">
             <MailIcon className="menu-icon" /> Applications
           </li>
         </Link>
-        <Link to="#" className="line">
+        <Link to="/recuiter/shortlisted" className="line">
           <li className="menu-item">
             <StarIcon className="menu-icon" /> Shortlists
           </li>
