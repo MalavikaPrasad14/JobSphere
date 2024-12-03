@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button"; // Updated styles
 import TopNavbar from "../Recruiter/TopNavbar";
-import SideNavbar from "../Recruiter/SideNavbar";
+import SideNavbar2 from "../Job Seeker/SideNavbar2";
 import MenuItem from "@mui/material/MenuItem";
 import "../../css/UserProfile.css";
 
@@ -289,35 +289,46 @@ const UserProfile = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First name is required";
-    if (!formData.lastName) newErrors.lastName = "Last name is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!/^\S+@\S+\.\S+$/.test(formData.email))
-      newErrors.email = "Invalid email format";
-    if (!formData.phoneNumber) newErrors.phoneNumber = "Phone number is required";
-    if (!/^\d{10}$/.test(formData.phoneNumber))
-      newErrors.phoneNumber = "Enter a valid phone number (10 digits)";
-    if (!formData.address) newErrors.address = "Address is required";
-
+  
+    if (currentSection === 1) {
+      if (!formData.firstName) newErrors.firstName = "First name is required";
+      if (!formData.lastName) newErrors.lastName = "Last name is required";
+      if (!formData.email) newErrors.email = "Email is required";
+      if (!/^\S+@\S+\.\S+$/.test(formData.email))
+        newErrors.email = "Invalid email format";
+      if (!formData.phoneNumber) newErrors.phoneNumber = "Phone number is required";
+      if (!/^\d{10}$/.test(formData.phoneNumber))
+        newErrors.phoneNumber = "Enter a valid phone number (10 digits)";
+      if (!formData.address) newErrors.address = "Address is required";
+    }
+  
+    if (currentSection === 2) {
+      if (!formData.collegeName) newErrors.collegeName = "College name is required";
+      if (!formData.course) newErrors.course = "Course is required";
+      if (!formData.passoutYear) newErrors.passoutYear = "Pass-out year is required";
+    }
+  
+    if (currentSection === 3) {
+      if (!formData.resume) newErrors.resume = "Resume is required";
+      if (!formData.profilePicture)
+        newErrors.profilePicture = "Profile picture is required";
+      if (!formData.socialMedia.linkedin)
+        newErrors.linkedin = "LinkedIn link is required";
+      if (!formData.socialMedia.github) newErrors.github = "GitHub link is required";
+    }
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log("Form Data Submitted:", formData);
-      alert("Profile saved successfully!");
-    } else {
-      alert("Please fix the errors in the form.");
-    }
-  };
-
+  
   const nextSection = () => {
-    if (currentSection < 3) {
+    if (validateForm()) {
       setCurrentSection(currentSection + 1);
+    } else {
+      alert("Please complete the required fields before proceeding.");
     }
   };
+  
 
   const prevSection = () => {
     if (currentSection > 1) {
@@ -329,7 +340,7 @@ const UserProfile = () => {
     <div className="layout">
       <TopNavbar />
       <div className="content">
-        <SideNavbar />
+        <SideNavbar2 />
         <div className="form-wrapper">
           <h3 className="form-heading">Complete Your Profile</h3>
           <Box

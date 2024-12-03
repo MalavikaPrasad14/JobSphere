@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/css/SideNavbar2.css";
+import "../../css/SideNavbar.css";
 import {
   Home as HomeIcon,
   AccountCircle as AccountIcon,
