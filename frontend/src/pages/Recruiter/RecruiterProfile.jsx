@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import TopNavbar from "../Recruiter/TopNavbar"; // Top Navbar component
 import SideNavbar from "../Recruiter/SideNavbar"; // Side Navbar component
 import "../../css/RecruiterProfile.css"; // Custom styles
+import { useNavigate } from "react-router-dom";
 
 const RecruiterProfile = () => {
   const [formData, setFormData] = useState({
@@ -120,12 +121,14 @@ const RecruiterProfile = () => {
   const handleBack = () => {
     setStep(1);
   };
+ const navigate=useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateStepTwo()) {
       console.log("Form Data Submitted:", formData);
       alert("Profile saved successfully!");
+      navigate("/recruiter/profile");
     } else {
       alert("Please fix the errors in the form.");
     }

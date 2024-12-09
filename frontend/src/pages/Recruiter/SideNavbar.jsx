@@ -16,22 +16,22 @@ const SideNavbar = () => {
         {/* <li className="menu-item">
           <HomeIcon className="menu-icon" /> Get Started
         </li> */}
-        <Link to="#" className="line">
+        <Link to="/recruiter/profile" className="line">
           <li className="menu-item">
             <PersonIcon className="menu-icon" />Profile
           </li>
         </Link>
-        <Link to="/newjob" className="line">
+        <Link to="/recruiter/JobList" className="line">
           <li className="menu-item">
             <WorkIcon className="menu-icon" />Posted Jobs
           </li>
         </Link>
-        <Link to="/recuiter/application" className="line">
+        <Link to="/recruiter/application" className="line">
           <li className="menu-item">
             <MailIcon className="menu-icon" /> Applications
           </li>
         </Link>
-        <Link to="/recuiter/shortlisted" className="line">
+        <Link to="/recruiter/shortlisted" className="line">
           <li className="menu-item">
             <StarIcon className="menu-icon" /> Shortlists
           </li>
@@ -41,7 +41,7 @@ const SideNavbar = () => {
         <a href="#settings">
           <SettingsIcon className="menu-icon" /> Settings
         </a>
-        <a href="#help">
+        <a href="/help">
           <HelpIcon className="menu-icon" /> Help
         </a>
         <a href="/login">

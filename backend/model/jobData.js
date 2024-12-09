@@ -5,7 +5,7 @@ const jobPostSchema = new mongoose.Schema({
   recruiterId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'RecruiterProfile', 
-    required: true,
+    // required: true,
   },
   jobTitle: {
     type: String,
@@ -18,7 +18,7 @@ const jobPostSchema = new mongoose.Schema({
   },
   jobCategory: {
     type: String, 
-    required: true,
+  
   },
   jobType: {
     type: String, 
@@ -30,7 +30,7 @@ const jobPostSchema = new mongoose.Schema({
   },
   salaryRange: {
     type: String, 
-    required: true,
+  
   },
   skillsRequired: {
     type: [String], 
@@ -43,7 +43,7 @@ const jobPostSchema = new mongoose.Schema({
   },
   companyName: {
     type: String, 
-    required: true, 
+     
   },
   companyLogo: {
     type: String, 

@@ -9,6 +9,7 @@ import {
   Help as HelpIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material"; // Importing the icons
+import { Link } from "react-router-dom";
 
 const SideNavbar2 = () => {
   return (
@@ -20,21 +21,25 @@ const SideNavbar2 = () => {
         <li className="menu-item">
           <AccountIcon sx={{ marginRight: 1 }} /> My Profile
         </li>
-        <li className="menu-item">
+       
+        <Link to="/jobSeeker/applied" className="line">
+          <li className="menu-item">
           <WorkIcon sx={{ marginRight: 1 }} /> Applied Jobs
-        </li>
-        <li className="menu-item">
-          <StarIcon sx={{ marginRight: 1 }} /> Shortlisted
-        </li>
-        {/* <li className="menu-item">
-          <TeamIcon sx={{ marginRight: 1 }} /> Team
-        </li> */}
+          </li>
+        </Link>
+       
+        <Link to="/jobSeeker/shortlisted" className="line">
+          <li className="menu-item">
+          <StarIcon sx={{ marginRight: 1 }} /> shortlisted
+          </li>
+        </Link>
+       
       </ul>
       <div className="bottom-links">
         <a href="#settings">
           <SettingsIcon sx={{ marginRight: 1 }} /> Settings
         </a>
-        <a href="#help">
+        <a href="/help">
           <HelpIcon sx={{ marginRight: 1 }} /> Help
         </a>
         <a href="#logout">

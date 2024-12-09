@@ -12,6 +12,11 @@ import Single from './components/Single'
 import JobPostForm from './pages/Recruiter/JobPostForm'
 import JobApplicationsTable from './pages/Recruiter/Application'
 import Shortlisted from './pages/Recruiter/Shortlisted'
+import JobList from './pages/Recruiter/Joblist'
+import Applied from './pages/Job Seeker/Appliedjob'
+import UserShortlisted from './pages/Job Seeker/UserShortlisted'
+import RProfile from './pages/Recruiter/RProfileSetup'
+// import HelpPage from './components/HelpPage'
 
 
 function App() {
@@ -28,9 +33,14 @@ function App() {
         <Route path="/recruiter" element={<RecruiterProfile />} />
         <Route path="/user" element={<UserProfile />} />
         <Route path="/home/single" element={<Single />} />
-        <Route path="/newjob" element={<JobPostForm />} />
-        <Route path="/recuiter/application" element={<JobApplicationsTable />} />
-        <Route path="/recuiter/shortlisted" element={<Shortlisted/>} />
+        <Route path="/recruiter/addJob"  element={<JobPostForm />} />
+        <Route path="/recruiter/application" element={<JobApplicationsTable />} />
+        <Route path="/recruiter/shortlisted" element={<Shortlisted/>} />
+        <Route path="/recruiter/JobList" element={<JobList/>} />
+        <Route path="/jobSeeker/applied" element={<Applied/>} />
+        <Route path="/jobSeeker/shortlisted" element={<UserShortlisted/>} />
+        {/* <Route path="/help" element={<HelpPage/>} /> */}
+        <Route path="/recruiter/profile" element={<RProfile/>} />
       </Routes>
     </>
   )
