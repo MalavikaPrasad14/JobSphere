@@ -1,61 +1,117 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import "../css/WelcomePage.css";
-import log from '../assets/orangelogo.png'
+import log from '../assets/orangelogo.png';
+import { USER_API_END_POINT } from '../utils/constant';
+import { setLoading, setUser } from '../redux/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'sonner';
+
 
 function LoginSignup() {
     const [isActive, setIsActive] = useState(false);
-    const [loginData, setLoginData] = useState({ userEmail: '', password: '' });
-    const [registerData, setRegisterData] = useState({ username: '', userEmail: '', password: '', phone: '' });
-    const [error, setError] = useState('');
+    const [input, setInput] = useState({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: "",
+    
+    });
+     const toggleForm = () => setIsActive(!isActive);
+    const [registerData, setRegisterData] = useState({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: 'student',
+    });
+    
+    
+    const [error, setError] = useState(null);
+    const { loading, user } = useSelector(store => store.auth);
     const navigate = useNavigate();
-
-    const toggleForm = () => setIsActive(!isActive);
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (isActive) {
-            setRegisterData({ ...registerData, [name]: value });
-        } else {
-            setLoginData({ ...loginData, [name]: value });
-        }
-        setError(''); // Clear error when typing
+    const dispatch = useDispatch();
+   
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setInput((prevInput) => ({ ...prevInput, [name]: value }));
     };
 
-    const handleLoginSubmit = async (event) => {
-        event.preventDefault();
+    // const handleRegisterChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setRegisterData((prevData) => ({ ...prevData, [name]: value }));
+    // };
+
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const res = await axiosInstance.post("/user/login", loginData);
-            alert(res.data.message);
-            if (res.data.usertoken) {
-                localStorage.setItem("token", res.data.usertoken);
-                navigate('/');
+            dispatch(setLoading(true));
+            const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                 
+            });
+            if (res.data.success) {
+                dispatch(setUser(res.data.user));
+                navigate("/home");
+                toast.success(res.data.message);
             }
-        } catch (err) {
-            setError("Invalid Credentials");
-            console.error(err);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || "Something went wrong");
+            alert("something wrong")
+        } finally {
+            dispatch(setLoading(false));
         }
     };
 
-    const handleRegisterSubmit = async (event) => {
-        event.preventDefault();
+    
+    
+
+    const handleRegisterChange = (e) => {
+        const { name, value } = e.target;
+        setRegisterData((prevData) => ({ ...prevData, [name]: value }));
+    };
+    
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const res = await axiosInstance.post("/user/register", registerData);
-            alert(res.data.message);
-            setIsActive(false);
-        } catch (err) {
-            setError("Registration failed. Please try again.");
-            console.error(err);
+            dispatch(setLoading(true));
+            const dataToSubmit = { ...registerData, role: registerData.role || "student" };
+            const res = await axios.post(`${USER_API_END_POINT}/register`, registerData, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (res.data.success) {
+                dispatch(setUser(res.data.user));
+                navigate("/home");
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || "Something went wrong");
+        } finally {
+            dispatch(setLoading(false));
         }
     };
+   
+    
+    
+
+    useEffect(() => {
+        if (user) {
+            navigate("/home");
+        }
+    }, [user, navigate]);
 
     return (
         <>
-            {/* Navbar */}
-            <header className="navbar">
-                <div className="logo">
+        {/* Navbar */}
+            <header className="navbar">                <div className="logo">
                     <img src={log} alt="JobSphere Logo"
                         style={{ width: 90, height: 90 }} />
                     <span style={{ fontWeight: 600, fontSize: 25 }}>JobSphere</span>
@@ -75,17 +131,40 @@ function LoginSignup() {
             <div className={`container ${isActive ? 'active' : ''}`} id="container">
                 {/* Sign-up form */}
                 <div className="form-container sign-up">
-                    <form onSubmit={handleRegisterSubmit}>
-                        <h1>Create Account</h1>
-                        <input type="text" placeholder="Name" name="username" value={registerData.username} onChange={handleChange} />
-                        <input type="email" placeholder="Email" name="userEmail" value={registerData.userEmail} onChange={handleChange} />
-                        <input type="text" placeholder="Phone" name="phone" value={registerData.phone} onChange={handleChange} />
-                        <input type="password" placeholder="Password" name="password" value={registerData.password} onChange={handleChange} />
-                        <input type="password" placeholder=" Confirm Password" name="password" value={registerData.password} onChange={handleChange} />
-                    
-                        <Link to={'/user'}><button type="submit">Sign Up</button></Link>
-                        {error && <p className="error-message">{error}</p>}
-                    </form>
+                <form onSubmit={handleRegisterSubmit}>
+    <h1>Create Account</h1>
+    <input
+        type="text"
+        placeholder="Full Name"
+        name="fullname"
+        value={registerData.fullname}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="email"
+        placeholder="Email"
+        name="email"
+        value={registerData.email}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="text"
+        placeholder="Phone Number"
+        name="phoneNumber"
+        value={registerData.phoneNumber}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        value={registerData.password}
+        onChange={handleRegisterChange}
+    />
+    <button type="submit">Sign Up</button>
+    {error && <p className="error-message">{error}</p>}
+</form>
+
                 </div>
 
                 {/* Sign-in form */}
@@ -94,16 +173,16 @@ function LoginSignup() {
                         <h1>Sign In</h1>
                         <input
                             type="email"
-                            name="userEmail"
+                            name="email"
                             placeholder="Email"
-                            value={loginData.userEmail}
+                            value={input.email}
                             onChange={handleChange}
                         />
                         <input
                             type="password"
                             name="password"
                             placeholder="Password"
-                            value={loginData.password}
+                            value={input.password}
                             onChange={handleChange}
                         />
                         <a href="#">Forget Your Password?</a>
@@ -139,10 +218,9 @@ function LoginSignup() {
 
                 </div>
             </div>
+
         </>
     );
 }
-
-
 
 export default LoginSignup;

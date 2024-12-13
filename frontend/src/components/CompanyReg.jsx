@@ -1,57 +1,64 @@
 // export default ComRegister;
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import company_icon from '../assets/companyicon.jpg'
-import "../css/WelcomePage.css"; 
+// import "../css/WelcomePage.css"; 
 import log from '../assets/orangelogo.png'
+// import "../css/WelcomePage.css";
+import { useSelector, useDispatch } from 'react-redux';
+import { USER_API_END_POINT } from '../utils/constant';
+import { setLoading, setUser } from '../redux/authSlice';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 function CompanyReg() {
+    const [registerData, setRegisterData] = useState({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: 'recruiter',
+    });
     const [isActive, setIsActive] = useState(false);
     const [loginData, setLoginData] = useState({ userEmail: '', password: '' });
-    const [registerData, setRegisterData] = useState({ username: '', userEmail: '', password: '', phone: '' });
+    
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const toggleForm = () => setIsActive(!isActive);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (isActive) {
-            setRegisterData({ ...registerData, [name]: value });
-        } else {
-            setLoginData({ ...loginData, [name]: value });
-        }
-        setError(''); // Clear error when typing
+    const handleRegisterChange = (e) => {
+        const { name, value } = e.target;
+        setRegisterData((prevData) => ({ ...prevData, [name]: value }));
     };
-
-    const handleLoginSubmit = async (event) => {
-        event.preventDefault();
+    
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const res = await axiosInstance.post("/user/login", loginData);
-            alert(res.data.message);
-            if (res.data.usertoken) {
-                localStorage.setItem("token", res.data.usertoken);
-                navigate('/');
+            dispatch(setLoading(true));
+            const dataToSubmit = { ...registerData, role: registerData.role || "recruiter" };
+            const res = await axios.post(`${USER_API_END_POINT}/registerRecu`, registerData, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (res.data.success) {
+                dispatch(setUser(res.data.user));
+                navigate("/home");
+                toast.success(res.data.message);
             }
-        } catch (err) {
-            setError("Invalid Credentials");
-            console.error(err);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || "Something went wrong");
+        } finally {
+            dispatch(setLoading(false));
         }
     };
+   
+    
+    
 
-    const handleRegisterSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const res = await axiosInstance.post("/user/register", registerData);
-            alert(res.data.message);
-            setIsActive(false);
-        } catch (err) {
-            setError("Registration failed. Please try again.");
-            console.error(err);
-        }
-    };
+
 
     return (
         <>
@@ -104,19 +111,39 @@ function CompanyReg() {
 
             {/* Sign-in form */}
             <div className="form-container sign-in">
-                <form onSubmit={handleLoginSubmit}>
-                    <h2> COMPANY SIGN UP</h2>
-                    <input type="text" placeholder="Name" name="username" value={registerData.username} onChange={handleChange} />
-                    <input type="email" placeholder="Email" name="userEmail" value={registerData.userEmail} onChange={handleChange} />
-                    <input type="text" placeholder="Phone" name="phone" value={registerData.phone} onChange={handleChange} />
-
-                    <input type="password" placeholder="Password" name="password" value={registerData.password} onChange={handleChange} />
-                    <input type="password" placeholder=" Confirm Password" name="password" value={registerData.password} onChange={handleChange} />
-                   
-            <Link to={'/recruiter'}> <button type="submit">Sign Up</button></Link>
-                   
-                    {error && <p className="error-message">{error}</p>}
-                </form>
+            <form onSubmit={handleRegisterSubmit}>
+    <h1>Create Account</h1>
+    <input
+        type="text"
+        placeholder="Full Name"
+        name="fullname"
+        value={registerData.fullname}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="email"
+        placeholder="Email"
+        name="email"
+        value={registerData.email}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="text"
+        placeholder="Phone Number"
+        name="phoneNumber"
+        value={registerData.phoneNumber}
+        onChange={handleRegisterChange}
+    />
+    <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        value={registerData.password}
+        onChange={handleRegisterChange}
+    />
+    <button type="submit">Sign Up</button>
+    {error && <p className="error-message">{error}</p>}
+</form>
             </div>
 
             {/* Toggle panels */}
