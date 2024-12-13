@@ -60,9 +60,9 @@ function LoginSignup() {
             const { user, message } = res.data;
     
             if (user.role === 'student') {
-                navigate('/user'); // Redirect student to user page
+                navigate('/home'); // Redirect student to user page
             } else if (user.role === 'recruiter') {
-                navigate('/recruiter/profile'); // Redirect recruiter to profile
+                navigate('/home'); // Redirect recruiter to profile
             } else {
                 toast.error('Unknown role');
             }
@@ -95,7 +95,7 @@ function LoginSignup() {
             });
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
-                navigate("/home");
+                navigate("/user");
                 toast.success(res.data.message);
             }
         } catch (error) {

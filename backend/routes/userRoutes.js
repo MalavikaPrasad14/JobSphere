@@ -5,7 +5,7 @@ const User= require('../model/user');
 router.use(express.json());
 router.use(express.urlencoded({extended:true}))
 
-const { login, logout, register, updateProfile, recuRegister }=require('../controller/user.controller.js')
+const { login, logout, register, recuRegister }=require('../controller/user.controller.js')
 const isAuthenticated =require('../middleware/isAuthenticator.js')
 const { singleUpload }= require('../middleware/multer.js')
  
@@ -16,7 +16,7 @@ router.route("/registerRecu").post(recuRegister);
 // app.post("/api/v1/user/register", upload.single("profilePhoto"), register);
 router.route("/login").post(login);
 router.route("/logout").get(logout);
-router.route("/profile/update").post(isAuthenticated,singleUpload,updateProfile);
+// router.route("/profile/update").post(isAuthenticated,singleUpload);
 router.get('/',async (req,res)=>{
     try{
     const data=await User.find();

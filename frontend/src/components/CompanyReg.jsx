@@ -44,7 +44,7 @@ function CompanyReg() {
             });
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
-                navigate("/home");
+                navigate("/recruiter");
                 toast.success(res.data.message);
             }
         } catch (error) {
