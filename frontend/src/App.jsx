@@ -16,6 +16,7 @@ import JobList from './pages/Recruiter/Joblist'
 import Applied from './pages/Job Seeker/Appliedjob'
 import UserShortlisted from './pages/Job Seeker/UserShortlisted'
 import RProfile from './pages/Recruiter/RProfileSetup'
+import UpdateProfileDialog from './pages/Recruiter/UpdateProfileDialog'
 // import HelpPage from './components/HelpPage'
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/jobSeeker/shortlisted" element={<UserShortlisted/>} />
         {/* <Route path="/help" element={<HelpPage/>} /> */}
         <Route path="/recruiter/profile" element={<RProfile/>} />
+        <Route path="/recruiter/update" element={<UpdateProfileDialog/>} />
       </Routes>
     </>
   )

@@ -242,7 +242,7 @@ const recuRegister = async (req, res) => {
       email,
       phoneNumber,
       password: hashedPassword,
-      role: 'recruiter', 
+      role:  'recruiter', 
      
     });
 

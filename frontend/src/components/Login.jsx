@@ -49,27 +49,34 @@ function LoginSignup() {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(setLoading(true));
+            dispatch(setLoading(true)); // Show loading spinner
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                 
             });
-            if (res.data.success) {
-                dispatch(setUser(res.data.user));
-                navigate("/home");
-                toast.success(res.data.message);
+    
+            // Extract user and role from response
+            const { user, message } = res.data;
+    
+            if (user.role === 'student') {
+                navigate('/user'); // Redirect student to user page
+            } else if (user.role === 'recruiter') {
+                navigate('/recruiter/profile'); // Redirect recruiter to profile
+            } else {
+                toast.error('Unknown role');
             }
+    
+            // Show success message
+            toast.success(message);
         } catch (error) {
             console.log(error);
             toast.error(error.response?.data?.message || "Something went wrong");
-            alert("something wrong")
         } finally {
-            dispatch(setLoading(false));
+            dispatch(setLoading(false)); // Hide loading spinner
         }
     };
-
+    
     
     
 
