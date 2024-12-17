@@ -4,24 +4,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import "../css/WelcomePage.css";
 import log from '../assets/orangelogo.png';
-import { USER_API_END_POINT } from '../utils/constant';
+
 import { setLoading, setUser } from '../redux/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'sonner';
 
-
 function LoginSignup() {
     const [isActive, setIsActive] = useState(false);
-    const [input, setInput] = useState({
-        fullname: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        role: "",
-    
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
     });
-     const toggleForm = () => setIsActive(!isActive);
+    const [loginError, setLoginError] = useState('');
+    const [load, setLoad] = useState(false);
+    const [error, setError] = useState(null);
+    const toggleForm = () => setIsActive(!isActive);
     const [registerData, setRegisterData] = useState({
         fullname: "",
         email: "",
@@ -31,55 +29,41 @@ function LoginSignup() {
     });
     
     
-    const [error, setError] = useState(null);
-    const { loading, user } = useSelector(store => store.auth);
+    
+   
+    const { user } = useSelector(store => store.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-   
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setInput((prevInput) => ({ ...prevInput, [name]: value }));
+        setLoginData((prev) => ({ ...prev, [name]: value }));
     };
-
-    // const handleRegisterChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setRegisterData((prevData) => ({ ...prevData, [name]: value }));
-    // };
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
+        setLoad(true);
+        setLoginError('');
+        setLoginData('');
+
+        const { email, password } = loginData;
         try {
-            dispatch(setLoading(true)); // Show loading spinner
-            const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const response = await axios.post("http://localhost:3000/api/login", { email, password });
+            const { access_token, refresh_token, user } = response.data;
     
-            // Extract user and role from response
-            const { user, message } = res.data;
-    
-            if (user.role === 'student') {
-                navigate('/home'); // Redirect student to user page
-            } else if (user.role === 'recruiter') {
-                navigate('/home'); // Redirect recruiter to profile
-            } else {
-                toast.error('Unknown role');
-            }
-    
-            // Show success message
-            toast.success(message);
+            // Save the token and user info in localStorage
+            localStorage.setItem('access_token', access_token);
+            localStorage.setItem('user', JSON.stringify(user)); // Store user data
+           
+            setLoginData('Login successful');
+            navigate('/home');
         } catch (error) {
-            console.log(error);
-            toast.error(error.response?.data?.message || "Something went wrong");
+            setLoginData(error.response ? error.response.data.message : 'Error logging in');
         } finally {
-            dispatch(setLoading(false)); // Hide loading spinner
+            setLoad(false);
         }
     };
     
-    
-    
-
     const handleRegisterChange = (e) => {
         const { name, value } = e.target;
         setRegisterData((prevData) => ({ ...prevData, [name]: value }));
@@ -89,25 +73,36 @@ function LoginSignup() {
         e.preventDefault();
         try {
             dispatch(setLoading(true));
+    
+            // Ensure 'role' defaults to 'student' if not provided
             const dataToSubmit = { ...registerData, role: registerData.role || "student" };
-            const res = await axios.post(`${USER_API_END_POINT}/register`, registerData, {
+    
+            // API call to register the user
+            const res = await axios.post("http://localhost:3000/api/register", dataToSubmit, {
                 headers: { 'Content-Type': 'application/json' },
             });
+    
+            // Handle success response
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
                 navigate("/user");
-                toast.success(res.data.message);
+                toast.success(res.data.message || "Registration successful");
+            } else {
+                toast.error(res.data.message || "Registration failed");
             }
         } catch (error) {
-            console.log(error);
+            console.error("Error during registration:", error);
             toast.error(error.response?.data?.message || "Something went wrong");
         } finally {
             dispatch(setLoading(false));
         }
     };
+    
    
     
     
+
+
 
     useEffect(() => {
         if (user) {
@@ -182,14 +177,14 @@ function LoginSignup() {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            value={input.email}
+                            value={loginData.email}
                             onChange={handleChange}
                         />
                         <input
                             type="password"
                             name="password"
                             placeholder="Password"
-                            value={input.password}
+                            value={loginData.password}
                             onChange={handleChange}
                         />
                         <a href="#">Forget Your Password?</a>

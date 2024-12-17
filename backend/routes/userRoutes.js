@@ -1,29 +1,25 @@
-const express=require('express')
 
+const express = require('express');
 const router = express.Router();
-const User= require('../model/user');
+const authMiddleware = require('../middleware/isAuthenticator.js')
+const { userRegistration, login, viewProfile, updateProfile,Registration,profile} = require('../controller/user.controller.js')
+const userModel = require('../model/user.js');
 router.use(express.json());
-router.use(express.urlencoded({extended:true}))
+router.use(express.urlencoded({extended:true}));
 
-const { login, logout, register, recuRegister }=require('../controller/user.controller.js')
-const isAuthenticated =require('../middleware/isAuthenticator.js')
-const { singleUpload }= require('../middleware/multer.js')
- 
+router.post('/register', userRegistration);
+router.post('/login', login);
 
 
-router.route("/register").post(register);
-router.route("/registerRecu").post(recuRegister);
-// app.post("/api/v1/user/register", upload.single("profilePhoto"), register);
-router.route("/login").post(login);
-router.route("/logout").get(logout);
-// router.route("/profile/update").post(isAuthenticated,singleUpload);
-router.get('/',async (req,res)=>{
-    try{
-    const data=await User.find();
-    res.status(200).send(data);
-    }catch (error){
-        res.status(404).send('data not found');
-}
-})
+// router.get('/logout', logout);
 
-module.exports=router
+
+
+router.get('/profile', authMiddleware(), viewProfile);
+
+router.post('/Compregister', Registration);
+router.put('/edit', authMiddleware({ role: 'Admin' }), updateProfile);
+
+router.post('/add', authMiddleware(), profile);
+
+module.exports = router;

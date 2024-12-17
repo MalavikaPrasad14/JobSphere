@@ -20,6 +20,7 @@ import carouselImages from "../assets/image4.jpg"
 import carouselImage1 from "../assets/image5.jpg"
 import SearchIcon from "@mui/icons-material/Search";
 const Home = () => {
+  const currentUser = localStorage.getItem('access_token');
   const [searchQuery, setSearchQuery] = useState("");
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -81,13 +82,35 @@ const Home = () => {
     });
     setFilteredJobs(results);
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const userData = localStorage.getItem('user');
+  
+    if (token && userData) {
+      try {
+        if (userData !== "undefined" && userData !== "") { // Check if userData is valid
+          const parsedUser = JSON.parse(userData);
+          setIsLoggedIn(true);
+          setUser(parsedUser); // Set user data
+        }
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        // Optionally reset state or log out user if data is invalid
+      }
+    }
+  }, []);
   
     const navigate = useNavigate();
   
     const handleUpdate = (job) => {
       navigate("/home/single", { state: { job } }); // Pass job details to Single.jsx
     };
-
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      navigate('/login');
+    }
   // Styles
   const styles = {
     heroSection: {
@@ -112,6 +135,21 @@ const Home = () => {
           <Link to={"/"}>Home</Link>
           <Link to={"/aboutus"}>About us</Link>
           <Link to={"/login"}>Join</Link>
+         
+          <Link to='/profile'>
+  {user ? (
+    <img
+      style={{ width: '50px', height: '50px' }}
+      className='rounded-full object-cover'
+      src={user.avatar} // Using user instead of currentUser
+      alt='profile'
+    />
+  ) : (
+    <li className='text-slate-700 hover:underline'>Profile</li> // Optionally show text or icon if no user
+  )}
+</Link>
+
+    
         </nav>
       </header>
       <Carousel

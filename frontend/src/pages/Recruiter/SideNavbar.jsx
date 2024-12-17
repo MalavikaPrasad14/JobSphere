@@ -16,7 +16,7 @@ const SideNavbar = () => {
         {/* <li className="menu-item">
           <HomeIcon className="menu-icon" /> Get Started
         </li> */}
-        <Link to="/recruiter/profile" className="line">
+        <Link to="/profile" className="line">
           <li className="menu-item">
             <PersonIcon className="menu-icon" />Profile
           </li>

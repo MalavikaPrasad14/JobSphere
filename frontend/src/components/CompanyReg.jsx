@@ -7,7 +7,7 @@ import company_icon from '../assets/companyicon.jpg'
 import log from '../assets/orangelogo.png'
 // import "../css/WelcomePage.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { USER_API_END_POINT } from '../utils/constant';
+
 import { setLoading, setUser } from '../redux/authSlice';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -21,8 +21,8 @@ function CompanyReg() {
         role: 'recruiter',
     });
     const [isActive, setIsActive] = useState(false);
-    const [loginData, setLoginData] = useState({ userEmail: '', password: '' });
     
+    const { user } = useSelector(store => store.auth);
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -38,22 +38,43 @@ function CompanyReg() {
         e.preventDefault();
         try {
             dispatch(setLoading(true));
+    
+            // Ensure 'role' defaults to 'student' if not provided
             const dataToSubmit = { ...registerData, role: registerData.role || "recruiter" };
-            const res = await axios.post(`${USER_API_END_POINT}/registerRecu`, registerData, {
+    
+            // API call to register the user
+            const res = await axios.post("http://localhost:3000/api/Compregister", dataToSubmit, {
                 headers: { 'Content-Type': 'application/json' },
             });
+    
+            // Handle success response
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
-                navigate("/recruiter");
-                toast.success(res.data.message);
+                // navigate('');
+                alert("Registration successful")
+                toast.success(res.data.message || "Registration successful");
+            } else {
+                toast.error(res.data.message || "Registration failed");
             }
         } catch (error) {
-            console.log(error);
+            console.error("Error during registration:", error);
             toast.error(error.response?.data?.message || "Something went wrong");
         } finally {
             dispatch(setLoading(false));
         }
     };
+    
+   
+    
+    
+
+
+
+    useEffect(() => {
+        if (user) {
+            navigate('/recruiter');
+        }
+    }, [user, navigate]);
    
     
     
